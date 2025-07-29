@@ -1,7 +1,7 @@
 export interface TestResult {
   id: string;
   name: string;
-  status: 'PASS' | 'FAIL';
+  status: "PASS" | "FAIL" | "ERROR" | "RUNNING";
   timestamp: string;
   output: string;
   duration?: number;

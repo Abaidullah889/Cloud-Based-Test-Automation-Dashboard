@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import TestTable from './components/TestTable';
 import { TestResultsResponse, TestRunResponse, ApiError } from './types';
-import { runTests, getTestResults } from './api/testService';
+import { runTests, getTestResults , clearTestResults } from './api/testService';
 
 const Dashboard: React.FC = () => {
   const [testResults, setTestResults] = useState<TestResultsResponse | null>(null);
@@ -83,6 +83,19 @@ const Dashboard: React.FC = () => {
     );
   };
 
+  const handleClearResults = async () => {
+    setError(null);
+    try {
+      await clearTestResults();
+      await loadTestResults(); // Refresh UI
+    } catch (err) {
+      const apiError = err as ApiError;
+      setError(apiError.message || 'Failed to clear test results');
+    }
+  };
+
+
+
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow-sm border-b border-gray-200">
@@ -131,6 +144,13 @@ const Dashboard: React.FC = () => {
                 className="btn-secondary"
               >
                 {isLoadingResults ? 'Refreshing...' : '🔄 Refresh Results'}
+              </button>
+
+              <button
+                onClick={handleClearResults}
+                className="btn-delete"
+              >
+                🗑️ Clear Tests
               </button>
             </div>
           </div>
