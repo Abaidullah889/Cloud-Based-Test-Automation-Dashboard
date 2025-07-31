@@ -1,0 +1,39 @@
+name: Deploy Frontend to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      - name: SSH and Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+            # Remove old container if exists
+            docker stop frontend || true
+            docker rm frontend || true
+
+            # Remove old code and clone the latest
+            rm -rf Cloud-Based-Test-Automation-Dashboard
+            git clone https://github.com/Abaidullah889/Cloud-Based-Test-Automation-Dashboard.git frontend
+            cd frontend
+
+            # Inject environment variables (Vite backend API)
+            echo "VITE_BACKEND_URL=http://172.31.47.104:5000" > .env
+
+            # Build and run Docker
+            docker build -t frontend-dashboard .
+            docker run -d -p 80:80 --name frontend frontend-dashboard
+          EOF
