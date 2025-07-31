@@ -26,7 +26,7 @@ jobs:
             sudo docker rm frontend || true
 
             # Remove old code and clone the latest
-            rm -rf Cloud-Based-Test-Automation-Dashboard
+            rm -rf frontend
             git clone https://github.com/Abaidullah889/Cloud-Based-Test-Automation-Dashboard.git frontend
             cd frontend
 
