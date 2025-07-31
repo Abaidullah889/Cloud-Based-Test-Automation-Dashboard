@@ -22,8 +22,8 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
             # Remove old container if exists
-            docker stop frontend || true
-            docker rm frontend || true
+            sudo docker stop frontend || true
+            sudo docker rm frontend || true
 
             # Remove old code and clone the latest
             rm -rf Cloud-Based-Test-Automation-Dashboard
@@ -34,6 +34,6 @@ jobs:
             echo "VITE_BACKEND_URL=http://172.31.47.104:5000" > .env
 
             # Build and run Docker
-            docker build -t frontend-dashboard .
-            docker run -d -p 80:80 --name frontend frontend-dashboard
+            sudo docker build -t frontend-dashboard .
+            sudo docker run -d -p 80:80 --name frontend frontend-dashboard
           EOF
