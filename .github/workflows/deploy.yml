@@ -30,9 +30,6 @@ jobs:
             git clone https://github.com/Abaidullah889/Cloud-Based-Test-Automation-Dashboard.git frontend
             cd frontend
 
-            # Inject environment variables (Vite backend API)
-            echo "VITE_BACKEND_URL=http://172.31.47.104:5000" > .env
-
             # Build and run Docker
             sudo docker build -t frontend-dashboard .
             sudo docker run -d -p 80:80 --name frontend frontend-dashboard
