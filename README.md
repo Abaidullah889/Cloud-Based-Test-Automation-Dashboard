@@ -1,112 +1,96 @@
-# Test Automation Dashboard
+# ☁️ Cloud-Based Test Automation Dashboard — Front-end
 
-A responsive, cloud-based test automation dashboard built with React, TypeScript, and Tailwind CSS.
+A **production-ready**, **cloud-hosted dashboard** built with **React**, **TypeScript**, and **Tailwind CSS**. It allows users to trigger and visualize **automated health-check tests** (CPU, memory, disk, services, containers, and more) on private infrastructure through a **secure, proxy-based architecture**.
 
-## 🚀 Features
+This project demonstrates **real-world DevOps practices**, **modern web development**, and **secure cloud networking**.
 
-- **Responsive Design**: Clean, modern UI that works on desktop and mobile
-- **Test Execution**: Run test suites with a single click
-- **Real-time Results**: View test results in an organized table format
-- **Color-coded Status**: Green for PASS, Red for FAIL
-- **Expandable Output**: Click to view full test output details
-- **Statistics Dashboard**: Quick overview of test metrics
-- **Loading States**: Smooth UX with loading indicators
-- **Error Handling**: Graceful error display and recovery
+---
 
-## 📁 Project Structure
+## 🔗 Live Dashboard
 
-```
-src/
-├── App.tsx                 # Main App component
-├── Dashboard.tsx           # Main dashboard with stats and controls
-├── components/
-│   └── TestTable.tsx      # Test results table component
-├── api/
-│   └── testService.ts     # API service functions (with mock data)
-├── types.ts               # TypeScript type definitions
-├── index.css              # Tailwind CSS styles
-├── main.tsx               # React entry point
-└── vite-env.d.ts         # Vite environment types
-```
+👉 **[Open the Dashboard](http://13.51.175.115/)**  
 
-## 🛠️ Setup & Installation
+---
 
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+## 🔍 Project Overview
 
-2. **Start development server:**
-   ```bash
-   npm run dev
-   ```
+- **Frontend Stack**: React 18, TypeScript, Tailwind CSS, Vite, Axios  
+- **Backend Access**: Proxied via Nginx to a private EC2 (not exposed to the internet)  
+- **Deployment**: Docker (multi-stage), Nginx, GitHub Actions CI/CD  
+- **Architecture**: Two EC2 instances in the same AWS VPC  
+  - Frontend: Public  
+  - Backend: Private  
 
-3. **Build for production:**
-   ```bash
-   npm run build
-   ```
+---
 
-## 🎯 Components Overview
+## 🔐 How It Works
 
-### Dashboard.tsx
-- Main dashboard component
-- Handles test execution and result loading
-- Displays statistics cards and controls
-- Manages loading/error states
+1. User accesses the **public front-end EC2 instance** via browser.
+2. The **React app** sends requests to `/api/...`.
+3. **Nginx** on the frontend intercepts and proxies `/api/...` to the **private backend EC2** instance.
+4. The **backend executes Python/Bash scripts** and returns JSON results.
+5. React displays **PASS/FAIL status**, durations, logs, and statistics in real-time.
 
-### TestTable.tsx
-- Responsive table for displaying test results
-- Expandable rows for full output viewing
-- Color-coded status indicators
-- Loading state with spinner
+---
 
-### API Service (testService.ts)
-- Mock API functions for development
-- Ready for backend integration
-- Includes error handling and TypeScript types
+## ✅ Key Features
 
-## 🔧 Backend Integration
+- 🚀 Run system health checks with a single click  
+- 📊 Real-time results with **PASS/FAIL** indicators  
+- 🧾 Expandable log output for each test  
+- 📋 Summary cards for test statistics  
+- 📱 Responsive design (desktop + mobile)  
+- ⚠️ Smooth error handling and loading states  
+- 🔐 **Zero CORS issues** due to internal proxying
 
-The app is set up with placeholder API calls. To integrate with your backend:
+---
 
-1. **Update API_BASE_URL** in `src/api/testService.ts`
-2. **Replace mock functions** with actual HTTP calls
-3. **Set environment variable** `VITE_API_URL` for your API endpoint
+## 🛠 Tooling & Infrastructure
 
-Expected API endpoints:
-- `POST /run-tests` - Initiate test execution
-- `GET /results` - Fetch test results
+- ⚛️ **React + Vite** for high-performance SPA  
+- 🎨 **Tailwind CSS** for responsive styling  
+- 🐳 **Docker multi-stage build** for production optimization  
+- 🌐 **Nginx** for static file serving & reverse proxy  
+- 🔄 **GitHub Actions** for automated CI/CD  
+- ☁️ **AWS EC2**:  
+  - Frontend: Public  
+  - Backend: Private (same VPC)  
+- 🔗 **Internal VPC communication** for secure API access
 
-## 📊 Mock Data
+---
 
-The app includes sample test data with:
-- Various test types (Ping, Login, Database, etc.)
-- Mixed PASS/FAIL statuses
-- Realistic timestamps and output messages
-- Performance metrics (duration)
+## 🔄 CI/CD Pipeline
 
-## 🎨 Styling
+- Triggered on every push to `main`  
+- GitHub Actions:  
+  - Builds Docker image  
+  - SSH into front-end EC2  
+  - Stops old container  
+  - Pulls latest code  
+  - Rebuilds and runs updated image  
+  - Pings health endpoint for validation
 
-- **Tailwind CSS** for responsive design
-- **Custom utility classes** for buttons
-- **Color-coded status indicators**
-- **Smooth animations and transitions**
+---
 
-## 🔮 Future Enhancements
+## 🔗 Backend Repository
 
-- Real-time test execution updates
-- Test history and trends
-- Test filtering and search
-- Export functionality
-- User authentication
-- Test scheduling
+All test logic and APIs are implemented separately:  
+👉 [Backend Repo](https://github.com/Abaidullah889/Cloud-Based-Test-Automation-Dashboard-Backened)
 
-## 📱 Responsive Design
+---
 
-The dashboard is fully responsive with:
-- Mobile-friendly navigation
-- Adaptive table layout
-- Responsive grid for statistics
-- Touch-friendly controls
+## 📈 Use Cases
 
-Ready to integrate with your backend API! 🚀 
+- ✅ Cloud system readiness and smoke testing  
+- 🧰 Internal DevOps tools  
+- 💼 Full-stack + cloud portfolio project  
+- 🔐 Secure monitoring dashboard for virtual infra
+
+---
+
+## 👨‍💻 Author
+
+Built by **Abaidullah Asif**  
+Feel free to **fork**, **star**, or **connect on [LinkedIn](https://www.linkedin.com/in/abaidullahasif/)** for feedback or collaboration.
+
+---
