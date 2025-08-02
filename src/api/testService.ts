@@ -2,7 +2,7 @@ import axios from 'axios';
 import { TestResult, TestRunResponse, TestResultsResponse, ApiError } from '../types';
 
 // Base API URL - replace with your actual backend URL
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://172.31.47.104:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 // Configure axios instance
 const apiClient = axios.create({
